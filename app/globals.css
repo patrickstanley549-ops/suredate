@@ -1,14 +1,20 @@
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 body { margin: 0; background: #f6f7fb; color: #172033; font-family: Arial, Helvetica, sans-serif; }
-main { width: min(100% - 32px, 440px); margin: 8vh auto; }
-.panel { background: white; border: 1px solid #e5e8ef; border-radius: 18px; padding: 32px; box-shadow: 0 12px 40px rgba(20,30,55,.06); }
+main { width: min(100% - 32px, 520px); margin: 5vh auto; }
+.panel { background: white; border: 1px solid #e5e8ef; border-radius: 18px; padding: 28px; box-shadow: 0 12px 40px rgba(20,30,55,.06); }
 h1 { margin: 0 0 8px; font-size: 28px; }
+h2 { margin: 0; font-size: 20px; }
 .muted { color: #667085; line-height: 1.5; }
 form { display: grid; gap: 14px; margin-top: 24px; }
 label { display: grid; gap: 7px; font-size: 14px; font-weight: 600; }
-input { width: 100%; border: 1px solid #d0d5dd; border-radius: 9px; padding: 12px 13px; font: inherit; }
-button { border: 0; border-radius: 9px; padding: 13px 16px; background: #273c75; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+input, select { width: 100%; min-height: 44px; border: 1px solid #d0d5dd; border-radius: 9px; padding: 11px 13px; background: white; color: inherit; font: inherit; }
+button { min-height: 46px; border: 0; border-radius: 9px; padding: 13px 16px; background: #273c75; color: white; font: inherit; font-weight: 700; cursor: pointer; }
 button.secondary { background: #eef1f7; color: #273c75; }
-.notice { margin-top: 16px; color: #344054; font-size: 14px; }
+.notice { margin-top: 16px; color: #344054; font-size: 14px; line-height: 1.5; }
+.field-help { margin: -6px 0 0; color: #667085; font-size: 13px; line-height: 1.45; }
+details { border: 1px solid #e5e8ef; border-radius: 10px; padding: 13px; }
+summary { cursor: pointer; font-size: 14px; font-weight: 700; }
+.optional-fields { display: grid; gap: 14px; margin-top: 16px; }
 a { color: #273c75; }
+@media (max-width: 480px) { main { width: min(100% - 20px, 520px); margin: 16px auto; } .panel { padding: 20px; } }
