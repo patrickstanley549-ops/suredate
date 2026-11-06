@@ -53,7 +53,7 @@ export async function signup(formData: FormData) {
   const heardAboutUsOther = String(formData.get("heard_about_us_other") ?? "").trim();
 
   if (password.length < 8) redirect("/login?error=password-too-short");
-  if (!/^\\+[1-9]\\d{7,14}$/.test(phone)) redirect("/login?error=invalid-phone");
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) redirect("/login?error=invalid-phone");
   if (!displayName || displayName.length > 40) redirect("/login?error=display-name-required");
   if (!gender || gender.length > 40) redirect("/login?error=gender-required");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) redirect("/login?error=invalid-date");
@@ -107,7 +107,7 @@ export async function logout() {
 
 export async function sendPhoneCode(formData: FormData) {
   const phone = String(formData.get("phone") ?? "").trim();
-  if (!/^\\+[1-9]\\d{7,14}$/.test(phone)) redirect("/verify-phone?error=invalid-phone");
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) redirect("/verify-phone?error=invalid-phone");
   const supabase = await createClient();
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) redirect("/login");
@@ -119,7 +119,7 @@ export async function sendPhoneCode(formData: FormData) {
 export async function verifyPhone(formData: FormData) {
   const token = String(formData.get("token") ?? "").trim();
   const phone = String(formData.get("phone") ?? "").trim();
-  if (!/^\\+[1-9]\\d{7,14}$/.test(phone) || !/^\\d{6}$/.test(token)) {
+  if (!/^\+[1-9]\d{7,14}$/.test(phone) || !/^\d{6}$/.test(token)) {
     redirect("/verify-phone?error=invalid-code");
   }
   const supabase = await createClient();
