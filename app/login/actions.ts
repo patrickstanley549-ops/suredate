@@ -111,7 +111,7 @@ export async function sendPhoneCode(formData: FormData) {
   const supabase = await createClient();
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) redirect("/login");
-  const { error } = await supabase.auth.updateUser({ phone });
+  const { error } = await supabase.auth.updateUser({ phone, data: { pending_phone: phone } });
   if (error) redirect("/verify-phone?error=sms-send-failed");
   redirect("/verify-phone?message=code-sent");
 }
