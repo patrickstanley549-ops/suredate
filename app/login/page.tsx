@@ -30,6 +30,8 @@ export default async function LoginPage({ searchParams }: Props) {
       <h2>Create your Suredate account</h2>
       <p className="muted">Your date of birth, display name and gender are required. Other personal details are optional and kept private.</p>
       <label>Email<input name="email" type="email" autoComplete="email" required /></label>
+      <label>Phone number<input name="phone" type="tel" autoComplete="tel" placeholder="+6281234567890" pattern="\\+[1-9][0-9]{7,14}" required /></label>
+      <p className="field-help">Use international format, including + and your country code. We will text you a verification code after you confirm your email.</p>
       <label>Password<input name="password" type="password" autoComplete="new-password" minLength={8} required /></label>
       <label>Display name<input name="display_name" type="text" autoComplete="nickname" maxLength={40} required /></label>
       <label>Gender
