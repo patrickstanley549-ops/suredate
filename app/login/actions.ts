@@ -11,7 +11,7 @@ function safeNext(value: FormDataEntryValue | null) {
 
 function isAdult(dateText: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateText)) return false;
-  const birth = new Date(`${dateText}T00:00:00.000Z`);
+  const birth = new Date(dateText + "T00:00:00.000Z");
   if (Number.isNaN(birth.getTime()) || birth.toISOString().slice(0, 10) !== dateText) return false;
   const today = new Date();
   let age = today.getUTCFullYear() - birth.getUTCFullYear();
@@ -21,6 +21,16 @@ function isAdult(dateText: string) {
   if (birthdayHasNotOccurred) age -= 1;
   return age >= 18;
 }
+
+const referralSources = new Set([
+  "google_search", "google_ads", "bing", "yahoo", "duckduckgo",
+  "facebook", "instagram", "tiktok", "youtube", "x_twitter", "snapchat",
+  "pinterest", "linkedin", "reddit", "threads", "whatsapp", "telegram",
+  "discord", "twitch", "quora", "bluesky", "friend_family",
+  "influencer_creator", "blog_article", "podcast", "online_ad",
+  "dating_community", "news_media", "app_store", "event_meetup",
+  "other", "not_sure",
+]);
 
 export async function login(formData: FormData) {
   const email = String(formData.get("email") ?? "").trim();
@@ -38,16 +48,20 @@ export async function signup(formData: FormData) {
   const displayName = String(formData.get("display_name") ?? "").trim();
   const gender = String(formData.get("gender") ?? "").trim();
   const dateOfBirth = String(formData.get("date_of_birth") ?? "").trim();
+  const heardAboutUs = String(formData.get("heard_about_us") ?? "").trim();
+  const heardAboutUsOther = String(formData.get("heard_about_us_other") ?? "").trim();
 
   if (password.length < 8) redirect("/login?error=password-too-short");
   if (!displayName || displayName.length > 40) redirect("/login?error=display-name-required");
   if (!gender || gender.length > 40) redirect("/login?error=gender-required");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateOfBirth)) redirect("/login?error=invalid-date");
-  const parsedBirthDate = new Date(`${dateOfBirth}T00:00:00.000Z`);
+  const parsedBirthDate = new Date(dateOfBirth + "T00:00:00.000Z");
   if (Number.isNaN(parsedBirthDate.getTime()) || parsedBirthDate.toISOString().slice(0, 10) !== dateOfBirth) {
     redirect("/login?error=invalid-date");
   }
   if (!isAdult(dateOfBirth)) redirect("/login?error=under-18");
+  if (heardAboutUs && !referralSources.has(heardAboutUs)) redirect("/login?error=signup-failed");
+  if (heardAboutUsOther.length > 120) redirect("/login?error=signup-failed");
 
   const headerStore = await headers();
   const origin = headerStore.get("origin") ?? process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -56,7 +70,7 @@ export async function signup(formData: FormData) {
     email,
     password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback?next=/dashboard`,
+      emailRedirectTo: origin + "/auth/callback?next=/dashboard",
       data: {
         display_name: displayName,
         gender,
@@ -67,6 +81,8 @@ export async function signup(formData: FormData) {
         height_cm: String(formData.get("height_cm") ?? "").trim(),
         weight_kg: String(formData.get("weight_kg") ?? "").trim(),
         clothing_size: String(formData.get("clothing_size") ?? "").trim(),
+        heard_about_us: heardAboutUs,
+        heard_about_us_other: heardAboutUs === "other" ? heardAboutUsOther : "",
       },
     },
   });
