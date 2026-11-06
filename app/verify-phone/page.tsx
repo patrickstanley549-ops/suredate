@@ -27,7 +27,7 @@ export default async function VerifyPhonePage({ searchParams }: Props) {
     {params.message === "code-sent" && <p className="notice" role="status">We sent a 6-digit code by SMS. Enter it below.</p>}
     <form action={sendPhoneCode}>
       <label>Mobile number
-        <input name="phone" type="tel" autoComplete="tel" placeholder="+6281234567890" defaultValue={phone} pattern="\\+[1-9][0-9]{7,14}" required />
+        <input name="phone" type="tel" autoComplete="tel" placeholder="+6281234567890" defaultValue={phone} pattern="\+[1-9][0-9]{7,14}" required />
       </label>
       <p className="field-help">Use international format, including + and your country code.</p>
       <button type="submit">Send verification code</button>
