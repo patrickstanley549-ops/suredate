@@ -15,6 +15,16 @@ export async function requestPasswordReset(formData: FormData) {
     redirectTo: new URL("/auth/callback?next=/update-password", origin).toString(),
   });
 
-  if (error) redirect("/forgot-password?error=send-failed");
+  if (error) {
+    // Log diagnostic details only; never log the submitted email or credentials.
+    console.error("[password-reset] Supabase email request failed", {
+      name: error.name,
+      status: error.status,
+      code: error.code,
+      message: error.message.split(email).join("[redacted]"),
+    });
+    redirect("/forgot-password?error=send-failed");
+  }
+
   redirect("/forgot-password?message=sent");
 }
