@@ -70,7 +70,7 @@ export default async function AdminPage() {
 
   if (usersError) {
     return <main className="admin-shell"><section className="admin-card">
-      <p className="eyebrow">SUREDATE · ADMIN</p><h1>We couldn't load accounts</h1>
+      <p className="eyebrow">SUREDATE · ADMIN</p><h1>We couldn&apos;t load accounts</h1>
       <p className="muted">Check that the Supabase secret key is correct and has not expired.</p>
       <Link href="/dashboard">Back to dashboard</Link>
     </section></main>;
