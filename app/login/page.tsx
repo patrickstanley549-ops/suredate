@@ -96,7 +96,7 @@ export default async function LoginPage({ searchParams }: Props) {
             <option value="app_store">App store</option>
             <option value="event_meetup">Event or meetup</option>
             <option value="other">Other</option>
-            <option value="not_sure">I'm not sure / I don't remember</option>
+            <option value="not_sure">I&apos;m not sure / I don&apos;t remember</option>
           </optgroup>
         </select>
       </label>
