@@ -5,4 +5,4 @@ export async function proxy(request: NextRequest) {
   return updateSession(request);
 }
 
-export const config = { matcher: ["/dashboard/:path*", "/login", "/auth/:path*"] };
+export const config = { matcher: ["/dashboard/:path*", "/login", "/verify-phone", "/auth/:path*"] };
