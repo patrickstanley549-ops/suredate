@@ -4,12 +4,12 @@ import { login, signup } from "./actions";
 type Props = { searchParams: Promise<{ error?: string; message?: string; next?: string }> };
 const errors: Record<string, string> = {
   "invalid-credentials": "Email or password is incorrect.",
+  "signup-failed": "We could not create your account. Please check your details and try again.",
   "password-too-short": "Use a password with at least 8 characters.",
   "invalid-date": "Enter a valid date of birth.",
   "under-18": "Suredate is for adults aged 18 and over.",
   "display-name-required": "Enter a display name (up to 40 characters).",
   "gender-required": "Choose a gender to create your profile.",
-  "signup-failed": "We could not create your account. Please check your details and try again.",
 };
 
 export default async function LoginPage({ searchParams }: Props) {
@@ -19,12 +19,14 @@ export default async function LoginPage({ searchParams }: Props) {
     <p className="muted">Sign in or create an account to continue.</p>
     {params.error && <p className="notice" role="alert">{errors[params.error] ?? "Something went wrong."}</p>}
     {params.message === "check-email" && <p className="notice" role="status">Check your email for the confirmation link. Your profile details have been saved privately.</p>}
+    {params.message === "password-updated" && <p className="notice" role="status">Your password has been updated. Please sign in with your new password.</p>}
     <form action={login}>
       <input type="hidden" name="next" value={params.next ?? "/dashboard"} />
       <h2>Sign in</h2>
       <label>Email<input name="email" type="email" autoComplete="email" required /></label>
       <label>Password<input name="password" type="password" autoComplete="current-password" minLength={8} required /></label>
       <button type="submit">Sign in</button>
+      <p className="field-help"><Link href="/forgot-password">Forgot password?</Link></p>
     </form>
     <form action={signup}>
       <h2>Create your Suredate account</h2>
