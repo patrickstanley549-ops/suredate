@@ -11,5 +11,6 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) return NextResponse.redirect(new URL(next, origin));
   }
-  return NextResponse.redirect(new URL("/login?error=signup-failed", origin));
+  const failurePath = next === "/update-password" ? "/forgot-password?error=invalid-link" : "/login?error=signup-failed";
+  return NextResponse.redirect(new URL(failurePath, origin));
 }
