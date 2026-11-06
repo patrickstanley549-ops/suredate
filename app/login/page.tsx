@@ -4,6 +4,7 @@ import { login, signup } from "./actions";
 type Props = { searchParams: Promise<{ error?: string; message?: string; next?: string }> };
 const errors: Record<string, string> = {
   "invalid-credentials": "Email or password is incorrect.",
+  "invalid-phone": "Enter a valid phone number with + and your country code (for example, +6281234567890).",
   "password-too-short": "Use a password with at least 8 characters.",
   "invalid-date": "Enter a valid date of birth.",
   "under-18": "Suredate is for adults aged 18 and over.",
