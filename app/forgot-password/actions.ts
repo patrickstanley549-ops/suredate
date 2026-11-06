@@ -10,8 +10,7 @@ export async function requestPasswordReset(formData: FormData) {
     redirect("/forgot-password?error=invalid-email");
   }
 
-  const headerStore = await headers();
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? headerStore.get("origin") ?? "http://localhost:3000";
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.suredate.online";
   const supabase = await createClient();
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: new URL("/auth/callback?next=/update-password", origin).toString(),
