@@ -57,6 +57,52 @@ export default async function LoginPage({ searchParams }: Props) {
           <label>Clothing size<input name="clothing_size" type="text" maxLength={30} placeholder="Optional" /></label>
         </div>
       </details>
+      <label>How did you hear about SureDate? (optional)
+        <select name="heard_about_us" defaultValue="">
+          <option value="">Select a source (optional)</option>
+          <optgroup label="Search engines">
+            <option value="google_search">Google Search</option>
+            <option value="google_ads">Google Ads</option>
+            <option value="bing">Bing</option>
+            <option value="yahoo">Yahoo</option>
+            <option value="duckduckgo">DuckDuckGo</option>
+          </optgroup>
+          <optgroup label="Social media and messaging">
+            <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
+            <option value="tiktok">TikTok</option>
+            <option value="youtube">YouTube</option>
+            <option value="x_twitter">X (Twitter)</option>
+            <option value="snapchat">Snapchat</option>
+            <option value="pinterest">Pinterest</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="reddit">Reddit</option>
+            <option value="threads">Threads</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="telegram">Telegram</option>
+            <option value="discord">Discord</option>
+            <option value="twitch">Twitch</option>
+            <option value="quora">Quora</option>
+            <option value="bluesky">Bluesky</option>
+          </optgroup>
+          <optgroup label="Recommendations and other channels">
+            <option value="friend_family">Friend or family</option>
+            <option value="influencer_creator">Influencer or content creator</option>
+            <option value="blog_article">Blog or online article</option>
+            <option value="podcast">Podcast</option>
+            <option value="online_ad">Online advertisement</option>
+            <option value="dating_community">Dating or online community</option>
+            <option value="news_media">News or magazine</option>
+            <option value="app_store">App store</option>
+            <option value="event_meetup">Event or meetup</option>
+            <option value="other">Other</option>
+            <option value="not_sure">I'm not sure / I don't remember</option>
+          </optgroup>
+        </select>
+      </label>
+      <label>If you selected Other, please specify (optional)
+        <input name="heard_about_us_other" type="text" maxLength={120} placeholder="Where did you hear about us?" />
+      </label>
       <button className="secondary" type="submit">Create account</button>
     </form>
     <p className="notice"><Link href="/">Back to home</Link></p>
