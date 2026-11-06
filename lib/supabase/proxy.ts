@@ -17,6 +17,9 @@ export async function updateSession(request: NextRequest) {
     },
   });
   const { data } = await supabase.auth.getClaims();
+  const { data: userData } = data?.claims ? await supabase.auth.getUser() : { data: { user: null } };
+  const user = userData?.user;
+  const phoneVerified = Boolean(user?.phone_confirmed_at);
   const path = request.nextUrl.pathname;
   if (path.startsWith("/dashboard") && !data?.claims) {
     const target = request.nextUrl.clone();
@@ -26,7 +29,19 @@ export async function updateSession(request: NextRequest) {
     response.cookies.getAll().forEach(cookie => redirect.cookies.set(cookie));
     return redirect;
   }
-  if (path === "/login" && data?.claims) {
+  if (data?.claims && !phoneVerified && path !== "/verify-phone") {
+    const target = request.nextUrl.clone();
+    target.pathname = "/verify-phone";
+    target.search = "";
+    return NextResponse.redirect(target);
+  }
+  if (path === "/login" && data?.claims && phoneVerified) {
+    const target = request.nextUrl.clone();
+    target.pathname = "/dashboard";
+    target.search = "";
+    return NextResponse.redirect(target);
+  }
+  if (path === "/verify-phone" && data?.claims && phoneVerified) {
     const target = request.nextUrl.clone();
     target.pathname = "/dashboard";
     target.search = "";
